@@ -13,6 +13,10 @@ const commentSchema = new mongoose.Schema({
   timestamp: {
     type: Date,
     default: Date.now()
+  },
+  videoId: {
+    type: String,
+    required: true
   }
 });
 
