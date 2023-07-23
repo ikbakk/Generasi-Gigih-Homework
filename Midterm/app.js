@@ -2,12 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const connectToDB = require('./utils/database');
-const { commentsRouter } = require('./routes');
+const { commentsRouter, videosRouter } = require('./routes');
 
 const {
   requestLogger,
   unknownEndpoint,
-
   errorHandler
 } = require('./utils/middleware');
 
@@ -19,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(requestLogger);
 
 app.use('/api/comments', commentsRouter);
+app.use('/api/videos', videosRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
