@@ -38,7 +38,25 @@ const addProduct = async (req, res, next) => {
   }
 };
 
+const searchProductByTitle = async (req, res, next) => {
+  try {
+    const { title } = req.query;
+
+    if (!title) {
+      return next(customError('Title is required', 400));
+    }
+
+    const regex = new RegExp(title, 'i');
+    const products = await Product.find({ title: { $regex: regex } });
+
+    res.status(200).send(products);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProductsByVideoId,
-  addProduct
+  addProduct,
+  searchProductByTitle
 };
