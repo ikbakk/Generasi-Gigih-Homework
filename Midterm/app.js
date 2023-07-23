@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const connectToDB = require('./utils/database');
-const { commentsRouter, videosRouter } = require('./routes');
+const { commentsRouter, videosRouter, productsRouter } = require('./routes');
 
 const {
   requestLogger,
@@ -19,6 +19,7 @@ app.use(requestLogger);
 
 app.use('/api/comments', commentsRouter);
 app.use('/api/videos', videosRouter);
+app.use('/api/products', productsRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
