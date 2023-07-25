@@ -4,40 +4,40 @@
 
 ### Videos Collection {#videos}
 
-```json
+```
 [
   {
-    "id": "videosid", //id of the video
-    "title": "video's title", //title of the video
-    "url": "http://thumbnail-image.placeholder.com/600x400" //url for the thumbnail
+    "id": <VideoObjectId>,
+    "title": string,
+    "url": string,
   }
 ]
 ```
 
 ### Products Collection
 
-```json
+```
 [
   {
-    "id": "productid", //id of the product
-    "title": "product's title", //title of the product
-    "urlProduct": "https://youtube.com" //video url of the product
-    "price": 100, //price of the product
-    "videoId": "videosid", //id of video collection this comment belongs to
+    "id": <ProductObjectId>,
+    "title": string
+    "urlProduct": string
+    "price": number
+    "videoId": <VideoObjectId>
   }
 ]
 ```
 
 ### Comments Collection
 
-```json
+```
 [
   {
-    "id": "commentid", //id of the comment
-    "comment": "comment's text", //comment
-    "videoId": "videosid", //id of video collection this comment belongs to
-    "username": "username", //username of the comment's author
-    "timestamp": "2023-07-23T03:10:55.733+00:00" //timestamp of the comment in ISO 8601 format
+    "id": <CommentObjectId>,
+    "comment": string
+    "videoId": <VideoObjectId>
+    "username": string
+    "timestamp": datetime(iso 8601)
   }
 ]
 ```
@@ -52,7 +52,7 @@
 
 ```
 {
- id: string,
+ id: <CommentObjectId>,
  comment: string,
  videoId: string,
  username: string,
@@ -66,7 +66,7 @@ Returns all comments for particular video
 
 - **URL Params**
   None
-- **Data Params**
+- **Body**
 
 ```
 {
@@ -89,7 +89,7 @@ Adds a new comment to a video
 
 - **URL Params**
   None
-- **Data Params**
+- **Body**
 
 ```
 {
@@ -114,11 +114,11 @@ Adds a new comment to a video
 
 ```
 {
- id: string,
+ id: <ProductObjectId>,
  title: string,
  urlProduct: string,
  price: number,
- videoId: string
+ videoId: <VideoObjectId>
 }
 ```
 
@@ -128,7 +128,7 @@ Returns all products for particular video
 
 - **URL Params**
   None
-- **Data Params**
+- **Body**
 
 ```
 {
@@ -145,20 +145,18 @@ Returns all products for particular video
   - **Code:** 400
   - **Content:** `"Video ID is required"`
 
-#### Get /api/products/search?title=title
+#### Get /api/products/search
 
 Returns products that contain query parameter in their title
 
 - **URL Params**
+  ```
+  {
+    title: string
+  }
+  ```
+- **Body**
   None
-- **Data Params**
-
-```
-{
-  title: string
-}
-```
-
 - **Headers**
   Content-Type: application/json
 - **Success Response:**
@@ -174,7 +172,7 @@ Adds a new product to a video
 
 - **URL Params**
   None
-- **Data Params**
+- **Body**
 
 ```
 {
@@ -200,7 +198,7 @@ Adds a new product to a video
 
 ```
 {
- id: string,
+ id: <VideoObjectId>,
  title: string,
  url: string
 }
@@ -212,7 +210,7 @@ Returns all videos
 
 - **URL Params**
   None
-- **Data Params**
+- **Body**
   None
 - **Headers**
   Content-Type: application/json
@@ -223,20 +221,18 @@ Returns all videos
   - **Code:** 500
   - **Content:** `"Something went wrong"`
 
-#### Get /api/videos/search?title=title
+#### Get /api/videos/search
 
 Returns videos that contain query parameter in their title
 
 - **URL Params**
+  ```
+  {
+    title: string
+  }
+  ```
+- **Body**
   None
-- **Data Params**
-
-```
-{
-  title: string
-}
-```
-
 - **Headers**
   Content-Type: application/json
 - **Success Response:**
@@ -252,7 +248,7 @@ Adds a new video to a video
 
 - **URL Params**
   None
-- **Data Params**
+- **Body**
 
 ```
 {
