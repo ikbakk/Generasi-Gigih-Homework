@@ -23,7 +23,7 @@
     "title": "product's title", //title of the product
     "urlProduct": "https://youtube.com" //video url of the product
     "price": 100, //price of the product
-    "videoId": videosid", //id of video collection this comment belongs to
+    "videoId": "videosid", //id of video collection this comment belongs to
   }
 ]
 ```
