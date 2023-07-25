@@ -7,11 +7,13 @@ const requestLogger = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-  const { status = 500, message } = err;
+  const { statusCode = 500, message, status } = err;
 
   console.log('message: ', err.message);
   console.log('stack: ', err.stack);
-  res.status(status).send(message || 'Something went wrong!');
+  res
+    .status(statusCode)
+    .json({ status: status, message: message || 'Something went wrong' });
 
   next(err);
 };

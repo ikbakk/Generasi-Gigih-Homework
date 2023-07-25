@@ -6,24 +6,20 @@ const getCommentsByVideoId = async (req, res, next) => {
     const { videoId } = req.body;
 
     if (!videoId) {
-      return next(customError('Video ID is required', 400));
+      return next(customError('Video ID is required', 400, 'Failed'));
     }
 
     const comments = await Comment.find({ videoId });
-    res.status(200).json(comments);
+
+    res.status(200).json({ status: 'Success', data: comments });
   } catch (err) {
-    next(err);
+    next(customError('Video not found', 404, 'Failed'));
   }
 };
 
-const submitComment = async (req, res) => {
+const submitComment = async (req, res, next) => {
   try {
     const { videoId, username, comment } = req.body;
-
-    if (!videoId || !username || !comment) {
-      throw new Error('Failed');
-    }
-
     const newComment = new Comment({
       videoId,
       username,
@@ -31,9 +27,10 @@ const submitComment = async (req, res) => {
     });
 
     await newComment.save();
-    res.status(200).json({ status: 'Success' });
+
+    res.status(201).json({ status: 'Success' });
   } catch (err) {
-    res.status(400).json({ status: err.message });
+    next(customError(err.message, 400, 'Failed'));
   }
 };
 

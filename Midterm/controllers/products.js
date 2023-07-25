@@ -6,24 +6,19 @@ const getProductsByVideoId = async (req, res, next) => {
     const { videoId } = req.body;
 
     if (!videoId) {
-      return next(customError('Video ID is required', 400));
+      return next(customError('Video ID is required', 400, 'Failed'));
     }
 
     const products = await Product.find({ videoId });
-    res.status(200).json(products);
+    res.status(200).json({ status: 'Success', data: products });
   } catch (err) {
-    next(err);
+    next(customError('Video not found', 404, 'Failed'));
   }
 };
 
 const addProduct = async (req, res, next) => {
   try {
     const { title, price, urlProduct, videoId } = req.body;
-
-    if (!title || !price || !urlProduct || !videoId) {
-      return next(customError('Missing attributes', 400));
-    }
-
     const product = new Product({
       title,
       price,
@@ -31,10 +26,11 @@ const addProduct = async (req, res, next) => {
       videoId
     });
 
-    const result = await product.save();
-    res.status(200).json(result);
+    await product.save();
+
+    res.status(201).json({ status: 'Success' });
   } catch (err) {
-    next(err);
+    next(customError(err.message, 400, 'Failed'));
   }
 };
 
@@ -43,13 +39,13 @@ const searchProductByTitle = async (req, res, next) => {
     const { title } = req.query;
 
     if (!title) {
-      return next(customError('Title is required', 400));
+      return next(customError('Title is required', 400, 'Failed'));
     }
 
     const regex = new RegExp(title, 'i');
     const products = await Product.find({ title: { $regex: regex } });
 
-    res.status(200).send(products);
+    res.status(200).json({ status: 'Success', data: products });
   } catch (err) {
     next(err);
   }

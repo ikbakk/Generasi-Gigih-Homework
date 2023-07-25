@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema({
-  title: String,
-  url: String
+  title: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  }
 });
 
 videoSchema.set('toJSON', {
