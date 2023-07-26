@@ -1,40 +1,30 @@
-const Comment = require('../models/comment');
-const customError = require('../utils/customError');
+const {
+  getCommentsById,
+  createNewCommentInstances
+} = require('../services/comments');
+const { errorResponse } = require('../utils/responses');
 
-const getCommentsByVideoId = async (req, res, next) => {
+const getComments = async (req, res, next) => {
   try {
     const { videoId } = req.body;
-
-    if (!videoId) {
-      return next(customError('Video ID is required', 400, 'Failed'));
-    }
-
-    const comments = await Comment.find({ videoId });
-
+    const comments = await getCommentsById(videoId);
     res.status(200).json({ status: 'Success', data: comments });
   } catch (err) {
-    next(customError('Video not found', 404, 'Failed'));
+    errorResponse(err, res);
   }
 };
 
 const submitComment = async (req, res, next) => {
   try {
     const { videoId, username, comment } = req.body;
-    const newComment = new Comment({
-      videoId,
-      username,
-      comment
-    });
-
-    await newComment.save();
-
+    await createNewCommentInstances(videoId, comment, username);
     res.status(201).json({ status: 'Success' });
   } catch (err) {
-    next(customError(err.message, 400, 'Failed'));
+    errorResponse(err, res);
   }
 };
 
 module.exports = {
-  getCommentsByVideoId,
+  getComments,
   submitComment
 };

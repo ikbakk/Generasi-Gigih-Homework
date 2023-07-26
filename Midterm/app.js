@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const connectToDB = require('./utils/database');
 const { commentsRouter, videosRouter, productsRouter } = require('./routes');
 
-const { unknownEndpoint, errorHandler } = require('./utils/middleware');
+const { unknownEndpoint } = require('./utils/middleware');
 
 const app = express();
 const databaseUrl = process.env.DB_URL ?? '';
@@ -15,9 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/comments', commentsRouter);
 app.use('/api/videos', videosRouter);
 app.use('/api/products', productsRouter);
-
 app.use(unknownEndpoint);
-app.use(errorHandler);
 
 connectToDB(databaseUrl);
 

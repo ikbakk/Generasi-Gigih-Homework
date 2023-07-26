@@ -1,58 +1,42 @@
-const Product = require('../models/product');
-const customError = require('../utils/customError');
+const { errorResponse } = require('../utils/responses');
+const {
+  getProductByVideoId,
+  searchProductsByTitle,
+  createNewProductInstances
+} = require('../services/products');
 
-const getProductsByVideoId = async (req, res, next) => {
+const getProducts = async (req, res) => {
   try {
     const { videoId } = req.body;
-
-    if (!videoId) {
-      return next(customError('Video ID is required', 400, 'Failed'));
-    }
-
-    const products = await Product.find({ videoId });
+    const products = await getProductByVideoId(videoId);
     res.status(200).json({ status: 'Success', data: products });
   } catch (err) {
-    next(customError('Video not found', 404, 'Failed'));
+    errorResponse(err, res);
   }
 };
 
-const addProduct = async (req, res, next) => {
+const addProduct = async (req, res) => {
   try {
     const { title, price, urlProduct, videoId } = req.body;
-    const product = new Product({
-      title,
-      price,
-      urlProduct,
-      videoId
-    });
-
-    await product.save();
-
+    await createNewProductInstances(title, price, urlProduct, videoId);
     res.status(201).json({ status: 'Success' });
   } catch (err) {
-    next(customError(err.message, 400, 'Failed'));
+    res.status(400).json({ status: 'Failed' });
   }
 };
 
-const searchProductByTitle = async (req, res, next) => {
+const searchProductByTitle = async (req, res) => {
   try {
     const { title } = req.query;
-
-    if (!title) {
-      return next(customError('Title is required', 400, 'Failed'));
-    }
-
-    const regex = new RegExp(title, 'i');
-    const products = await Product.find({ title: { $regex: regex } });
-
+    const products = await searchProductsByTitle(title);
     res.status(200).json({ status: 'Success', data: products });
   } catch (err) {
-    next(err);
+    errorResponse(err, res);
   }
 };
 
 module.exports = {
-  getProductsByVideoId,
+  getProducts,
   addProduct,
   searchProductByTitle
 };

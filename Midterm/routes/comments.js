@@ -1,10 +1,7 @@
 const commentsRouter = require('express').Router();
-const {
-  getCommentsByVideoId,
-  submitComment
-} = require('../controllers/comments');
+const { submitComment, getComments } = require('../controllers/comments');
 
-commentsRouter.get('/', getCommentsByVideoId);
+commentsRouter.get('/', getComments);
 commentsRouter.post('/', submitComment);
 
 module.exports = commentsRouter;

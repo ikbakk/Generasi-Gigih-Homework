@@ -6,24 +6,11 @@ const requestLogger = (req, res, next) => {
   next();
 };
 
-const errorHandler = (err, req, res, next) => {
-  const { statusCode = 500, message, status } = err;
-
-  console.log('message: ', err.message);
-  console.log('stack: ', err.stack);
-  res
-    .status(statusCode)
-    .json({ status: status, message: message || 'Something went wrong' });
-
-  next(err);
-};
-
 const unknownEndpoint = (req, res) => {
   res.status(404).send('Unknown endpoint');
 };
 
 module.exports = {
   requestLogger,
-  unknownEndpoint,
-  errorHandler
+  unknownEndpoint
 };

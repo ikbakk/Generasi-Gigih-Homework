@@ -1,11 +1,11 @@
 const productsRouter = require('express').Router();
 const {
-  getProductsByVideoId,
+  getProducts,
   addProduct,
   searchProductByTitle
 } = require('../controllers/products');
 
-productsRouter.get('/', getProductsByVideoId);
+productsRouter.get('/', getProducts);
 productsRouter.get('/search', searchProductByTitle);
 productsRouter.post('/', addProduct);
 
