@@ -1,5 +1,43 @@
 # Mid Term Project (Backend Only)
 
+# Getting Started
+
+Clone the repo:
+
+```bash
+git clone https://github.com/FullStack-Homework/Midterm.git
+```
+
+then run:
+
+```bash
+npm install
+```
+
+or with pnpm:
+
+```bash
+pnpm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+pnpm dev
+```
+
+Then the server will run on port 3000 as default
+
+## Environment Variables
+
+`DB_URL = your mongodb url`
+
 # Database structure
 
 ### Comments Collection
@@ -7,9 +45,9 @@
 ```
 [
   {
-    "id": <CommentObjectId>,
+    "id": <Mongodb ObjectId>,
     "comment": string
-    "videoId": <VideoObjectId>
+    "videoId": <Mongodb ObjectId>
     "username": string
     "timestamp": datetime(iso 8601)
   }
@@ -21,21 +59,21 @@
 ```
 [
   {
-    "id": <ProductObjectId>,
+    "id": <Mongodb ObjectId>,
     "title": string
     "urlProduct": string
     "price": number
-    "videoId": <VideoObjectId>
+    "videoId": <Mongodb ObjectId>
   }
 ]
 ```
 
-### Videos Collection {#videos}
+### Videos Collection
 
 ```
 [
   {
-    "id": <VideoObjectId>,
+    "id": <Mongodb ObjectId>,
     "title": string,
     "url": string,
   }
@@ -43,6 +81,110 @@
 ```
 
 # API Structure
+
+```mermaid
+flowchart LR
+    subgraph Routes
+        direction LR
+        subgraph Rc[Comments]
+            Rc1["`/api/comments`"]
+        end
+        subgraph Rp[Products]
+            direction LR
+            Rp1["`/api/products`"]
+            Rp2["`/api/products/search`"]
+        end
+        subgraph Rv[Videos]
+            direction LR
+            Rv1["`/api/videos`"]
+            Rv2["`/api/videos/search`"]
+        end
+    end
+    subgraph Controllers
+        direction LR
+        subgraph Cc[Comments]
+            direction LR
+            Cc1["`getComments()`"]
+            Cc2["`submitComment()`"]
+        end
+        subgraph Cp[Products]
+            direction LR
+            Cp1["`getProducts()`"]
+            Cp2["`addProducts()`"]
+            Cp3["`searchProducts()`"]
+        end
+        subgraph Cv[Videos]
+            direction LR
+            Cv1["`getAllVideos()`"]
+            Cv2["`addVideos()`"]
+            Cv3["`searchVideos()`"]
+        end
+    end
+    subgraph Services
+        direction LR
+        subgraph Sc[Comments]
+            direction LR
+            Sc1["`getCommentsById()`"]
+            Sc2["`createNewCommentInstances()`"]
+        end
+        subgraph Sp[Products]
+            direction LR
+            Sp1["`getProductByVideoId()`"]
+            Sp2["`createNewProductInstances()`"]
+            Sp3["`searchProductsByTitle()`"]
+        end
+        subgraph Sv[Videos]
+            direction LR
+            Sv1["`allVideos()`"]
+            Sv2["`createNewVideoInstance()`"]
+            Sv3["`searchVideoByTitle()`"]
+        end
+    end
+    subgraph Models
+        direction LR
+        subgraph Mc[Comments]
+            direction LR
+            Mc1["`Comment Schema`"]
+        end
+        subgraph Mp[Products]
+            direction LR
+            Mp1["`Product Schema`"]
+
+        end
+        subgraph Mv[Videos]
+            direction LR
+            Mv1["`Video Schema`"]
+        end
+    end
+
+    Req([Requests]) --> Routes
+    Routes --> Controllers
+    Controllers --> Services
+    Services --> Models
+
+    Rc1 -- GET --> Cc1
+    Rc1 -- POST --> Cc2
+    Rp1 -- GET --> Cp1
+    Rp1 -- POST --> Cp2
+    Rp2 -- GET --> Cp3
+    Rv1 -- GET --> Cv1
+    Rv1 -- POST --> Cv2
+    Rv2 -- GET --> Cv3
+    Cc1 --> Sc1
+    Cc2 --> Sc2
+    Cp1 --> Sp1
+    Cp2 --> Sp2
+    Cp3 --> Sp3
+    Cv1 --> Sv1
+    Cv2 --> Sv2
+    Cv3 --> Sv3
+    Sc1 & Sc2 --> Mc1
+    Sp1 & Sp2 & Sp3 --> Mp1
+    Sv1 & Sv2 & Sv3 --> Mv1
+
+```
+
+##
 
 # API Responses and Requests
 
@@ -136,9 +278,19 @@ Adds a new comment to a video
     ```
     {
       status: "Failed" ,
-      message: "Comment validation failed: username: Path `username` is required., comment: Path `comment` is required., videoId: Path `videoId` is required."
+      message: "Missing required attributes"
     }
+    ```
 
+    or
+
+  - **Code:** 404
+  - **Content:**
+    ```
+    {
+      status: "Failed",
+      message: "Video not found"
+    }
     ```
 
 ## Products
@@ -269,7 +421,16 @@ Adds a new product to a video
     ```
     {
       "status": "Failed",
-      "message": "Product validation failed: title: Path `title` is required., price: Path `price` is required., urlProduct: Path `urlProduct` is required."
+      "message": "Video ID is required"
+    }
+    ```
+    or
+  - **Code:** 404
+  - **Content:**
+    ```
+    {
+      "status": "Failed",
+      "message": "Video not found"
     }
     ```
 
@@ -302,15 +463,6 @@ Returns all videos
     {
       "status": "Success",
       "data": [{<video object>}]
-    }
-    ```
-- **Error Response:**
-  - **Code:** 500
-  - **Content:**
-    ```
-    {
-      "status": "Failed",
-      "message": "Something went wrong"
     }
     ```
 
@@ -347,15 +499,6 @@ Returns videos that contain query parameter in their title
       "message": "Title is required"
     }
     ```
-    or
-  - **Code:** 500
-  - **Content:**
-    ```
-    {
-      "status": "Failed",
-      "message": "Something went wrong"
-    }
-    ```
 
 #### Post /api/videos
 
@@ -389,40 +532,6 @@ Adds a new video to a video
     ```
     {
       "status": "Failed",
-      "message": "Video validation failed: title: Path `title` is required., url: Path `url` is required."
+      "message": "Missing required attributes"
     }
     ```
-
-# Getting Started
-
-Clone the repo:
-
-```bash
-git clone https://github.com/FullStack-Homework/Midterm.git
-```
-
-then run:
-
-```bash
-npm install
-```
-
-or with pnpm:
-
-```bash
-pnpm install
-```
-
-Run the development server:
-
-```bash
-npm run dev
-```
-
-or
-
-```bash
-pnpm run dev
-```
-
-Then the server will run on port 3000 as default

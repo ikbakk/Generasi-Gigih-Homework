@@ -25,7 +25,7 @@ const addProduct = async (req, res) => {
   }
 };
 
-const searchProductByTitle = async (req, res) => {
+const searchProducts = async (req, res) => {
   try {
     const { title } = req.query;
     const products = await searchProductsByTitle(title);
@@ -38,5 +38,5 @@ const searchProductByTitle = async (req, res) => {
 module.exports = {
   getProducts,
   addProduct,
-  searchProductByTitle
+  searchProducts
 };

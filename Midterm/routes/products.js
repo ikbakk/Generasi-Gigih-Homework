@@ -2,11 +2,11 @@ const productsRouter = require('express').Router();
 const {
   getProducts,
   addProduct,
-  searchProductByTitle
+  searchProducts
 } = require('../controllers/products');
 
 productsRouter.get('/', getProducts);
-productsRouter.get('/search', searchProductByTitle);
+productsRouter.get('/search', searchProducts);
 productsRouter.post('/', addProduct);
 
 module.exports = productsRouter;

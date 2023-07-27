@@ -1,5 +1,6 @@
 const { Video } = require('../models');
 const {
+  allVideos,
   createNewVideoInstance,
   searchVideoByTitle
 } = require('../services/videos');
@@ -7,7 +8,7 @@ const { errorResponse } = require('../utils/responses');
 
 const getAllVideos = async (req, res) => {
   try {
-    const videos = await Video.find();
+    const videos = await allVideos();
     res.status(200).json({ status: 'Success', data: videos });
   } catch (err) {
     errorResponse(err, res);
