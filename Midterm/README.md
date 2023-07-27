@@ -4,10 +4,6 @@
 
 Clone the repo:
 
-```bash
-git clone https://github.com/FullStack-Homework/Midterm.git
-```
-
 then run:
 
 ```bash
@@ -86,34 +82,29 @@ Then the server will run on port 3000 as default
 flowchart LR
     subgraph Routes
         direction LR
-        subgraph Rc[Comments]
-            Rc1["`/api/comments`"]
-        end
-        subgraph Rp[Products]
-            direction LR
-            Rp1["`/api/products`"]
-            Rp2["`/api/products/search`"]
-        end
-        subgraph Rv[Videos]
-            direction LR
-            Rv1["`/api/videos`"]
-            Rv2["`/api/videos/search`"]
+        subgraph Rc[index.js]
+          direction LR
+          Rc1["`/api/comments`"]
+          Rp1["`/api/products`"]
+          Rp2["`/api/products/search`"]
+          Rv1["`/api/videos`"]
+          Rv2["`/api/videos/search`"]
         end
     end
     subgraph Controllers
         direction LR
-        subgraph Cc[Comments]
+        subgraph Cc[comments.js]
             direction LR
             Cc1["`getComments()`"]
             Cc2["`submitComment()`"]
         end
-        subgraph Cp[Products]
+        subgraph Cp[products.js]
             direction LR
             Cp1["`getProducts()`"]
             Cp2["`addProducts()`"]
             Cp3["`searchProducts()`"]
         end
-        subgraph Cv[Videos]
+        subgraph Cv[videos.js]
             direction LR
             Cv1["`getAllVideos()`"]
             Cv2["`addVideos()`"]
@@ -122,18 +113,18 @@ flowchart LR
     end
     subgraph Services
         direction LR
-        subgraph Sc[Comments]
+        subgraph Sc[comments.js]
             direction LR
             Sc1["`getCommentsById()`"]
             Sc2["`createNewCommentInstances()`"]
         end
-        subgraph Sp[Products]
+        subgraph Sp[products.js]
             direction LR
             Sp1["`getProductByVideoId()`"]
             Sp2["`createNewProductInstances()`"]
             Sp3["`searchProductsByTitle()`"]
         end
-        subgraph Sv[Videos]
+        subgraph Sv[videos.js]
             direction LR
             Sv1["`allVideos()`"]
             Sv2["`createNewVideoInstance()`"]
@@ -142,17 +133,10 @@ flowchart LR
     end
     subgraph Models
         direction LR
-        subgraph Mc[Comments]
+        subgraph Mc[index.js]
             direction LR
             Mc1["`Comment Schema`"]
-        end
-        subgraph Mp[Products]
-            direction LR
             Mp1["`Product Schema`"]
-
-        end
-        subgraph Mv[Videos]
-            direction LR
             Mv1["`Video Schema`"]
         end
     end
