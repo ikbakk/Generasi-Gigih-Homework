@@ -12,8 +12,8 @@ const ContentLayout = () => (
 function App() {
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-black px-2 pt-2">
-      <ContentLayout />
-      <MediaPlayer />
+      {/* <ContentLayout />
+      <MediaPlayer /> */}
     </div>
   );
 }
