@@ -1,12 +1,13 @@
-import { AiOutlineLeft } from "react-icons/ai";
 import reactIcon from "../../assets/react.svg";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/LoginContext";
-import { SongContext } from "../../Context/SongContext";
+import { useNavigate } from "react-router-dom";
+
+import { AiOutlineLeft } from "react-icons/ai";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { isLoggedIn, requestUrl } = useContext(LoginContext);
-  const { setIsSearching } = useContext(SongContext);
 
   const handleLogin = () => {
     if (!isLoggedIn) {
@@ -15,7 +16,7 @@ const Header = () => {
   };
 
   const handleBack = () => {
-    setIsSearching(false);
+    navigate("/");
   };
 
   const handleLogout = () => {

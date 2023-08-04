@@ -1,9 +1,12 @@
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { TiHome } from "react-icons/ti";
 import { AiOutlineSearch } from "react-icons/ai";
 import Searchbar from "./Searchbar";
-import { useEffect, useRef, useState } from "react";
 
 const Top = () => {
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -23,6 +26,10 @@ const Top = () => {
     };
   }, []);
 
+  const handleGoHome = () => {
+    navigate("/");
+  };
+
   const handleToggleSearchbar = () => {
     setIsActive(!isActive);
   };
@@ -32,7 +39,10 @@ const Top = () => {
       ref={containerRef}
       className="rounded-lg bg-primaryBlack p-4 text-primaryWhite"
     >
-      <div className="flex  items-center gap-4 duration-300 hover:cursor-pointer hover:text-white">
+      <div
+        onClick={handleGoHome}
+        className="flex  items-center gap-4 duration-300 hover:cursor-pointer hover:text-white"
+      >
         <div className="my-1 text-3xl">
           <TiHome />
         </div>
