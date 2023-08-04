@@ -9,7 +9,7 @@ interface SongsProps {
 const Songs = ({ title, tracks }: SongsProps) => {
   return (
     <div className="flex flex-col gap-4 overflow-hidden">
-      <h2 className="text-3xl font-semibold text-white">{title}</h2>
+      <h2 className="text-2xl font-bold tracking-wide text-white">{title}</h2>
       <SongsContainer tracks={tracks} />
     </div>
   );
