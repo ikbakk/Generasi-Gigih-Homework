@@ -1,14 +1,16 @@
-import { useContext } from "react";
+import { Track } from "spotify-types";
 import SongsContainer from "./SongsContainer";
-import { SongContext } from "../../../Context/SongContext";
 
-const Songs = () => {
-  const { isSearching } = useContext(SongContext);
-  const title = isSearching ? "Search Results" : "Recommended Songs";
+interface SongsProps {
+  title: string;
+  tracks: Track[];
+}
+
+const Songs = ({ title, tracks }: SongsProps) => {
   return (
     <div className="flex flex-col gap-4 overflow-hidden">
       <h2 className="text-3xl font-semibold text-white">{title}</h2>
-      <SongsContainer />
+      <SongsContainer tracks={tracks} />
     </div>
   );
 };
