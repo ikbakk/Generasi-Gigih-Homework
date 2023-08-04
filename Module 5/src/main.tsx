@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Layouts/MainLayout.tsx";
 import SearchPage from "./Pages/Search.tsx";
 import RecommendedSongs from "./Pages/RecommendedSongs.tsx";
-import Content from "./Components/Content/index.tsx";
+import Home from "./Pages/Home.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Content />,
+        element: <Home />,
       },
       {
         path: "/search",
