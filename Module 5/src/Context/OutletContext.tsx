@@ -17,7 +17,7 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const generateCategoryEntries = () => {
     const slicedArray = (array: Track[]) => array.slice(0, 7);
 
-    const ids = ["category1"];
+    const ids = ["recommended"];
     const names = ["Recommended Songs"];
     const items = [slicedArray(recommendedSongs)];
 
