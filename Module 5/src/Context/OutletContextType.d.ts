@@ -7,5 +7,12 @@ export interface ContextProviderProps {
 export interface ContextValue {
   recommendedSongs: Track[];
   searchedSongs: Track[];
+  categoryEntries: CategoryEntry[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface CategoryEntry {
+  id: string;
+  name: string;
+  items: Track[];
 }

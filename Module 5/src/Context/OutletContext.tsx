@@ -14,6 +14,22 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const { searchResult } = useSearchTracks(searchQuery);
   const { recommendedSongs: songs } = useFetchRecommendedSongs();
 
+  const generateCategoryEntries = () => {
+    const slicedArray = (array: Track[]) => array.slice(0, 7);
+
+    const ids = ["category1"];
+    const names = ["Recommended Songs"];
+    const items = [slicedArray(recommendedSongs)];
+
+    const result = ids.map((id, index) => ({
+      id,
+      name: names[index],
+      items: items[index],
+    }));
+
+    return result;
+  };
+
   useEffect(() => {
     setRecommendedSongs(songs as Track[]);
   }, [songs]);
@@ -22,7 +38,9 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
     setSearchedSongs(searchResult);
   }, [searchResult]);
 
+  const categoryEntries = generateCategoryEntries();
   const contextValue = {
+    categoryEntries,
     recommendedSongs,
     searchedSongs,
     setSearchQuery,

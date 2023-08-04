@@ -1,9 +1,10 @@
+import { Track } from "spotify-types";
 import CategoryItems from "./CategoryItems";
 import Header from "./Header";
 
 interface CategoryProps {
   categoryTitle: string;
-  categoryItems: never[];
+  categoryItems: Track[];
 }
 
 const Category = ({ categoryItems, categoryTitle }: CategoryProps) => {
