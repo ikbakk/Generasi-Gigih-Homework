@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import {
-  CategoryItemsType,
+  Category,
   ContextProviderProps,
   ContextValue,
 } from "./BottomSidebarContextType";
 import useFeaturedPlaylist from "../Hooks/useFetchFeaturedPlaylists";
 import { Playlist } from "spotify-types";
+import useFetchUserPlaylists from "../Hooks/useFetchUserPlaylist";
 
 const BottomSidebarContext = createContext<ContextValue>({} as ContextValue);
 
@@ -17,21 +18,18 @@ const BottomSidebarContextProvider = ({ children }: ContextProviderProps) => {
       items: [] as Playlist[],
     },
     {
-      id: "top10",
-      name: "top 10",
-      items: [],
-    },
-    {
       id: "myplaylist",
       name: "my playlist",
-      items: [],
+      items: [] as Playlist[],
     },
   ];
   const [selectedCategory, setSelectedCategory] = useState("recommended");
-  const [selectedCategoryItems, setSelectedCategoryItems] =
-    useState<CategoryItemsType>([]);
-  const [categories, setCategories] = useState(categoriesArray);
+  const [selectedCategoryItems, setSelectedCategoryItems] = useState<
+    Playlist[]
+  >([]);
+  const [categories, setCategories] = useState<Category[]>(categoriesArray);
   const { featuredPlaylist } = useFeaturedPlaylist();
+  const { userPlaylists } = useFetchUserPlaylists();
 
   useEffect(() => {
     if (categories) {
@@ -51,12 +49,17 @@ const BottomSidebarContextProvider = ({ children }: ContextProviderProps) => {
           ...category,
           items: featuredPlaylist,
         };
+      } else if (category.id === "myplaylist") {
+        return {
+          ...category,
+          items: userPlaylists,
+        };
       }
       return category;
     });
 
     setCategories(updatedRecommendedCategory);
-  }, [featuredPlaylist]);
+  }, [featuredPlaylist, userPlaylists]);
 
   const contextValue = {
     selectedCategoryItems,

@@ -2,14 +2,20 @@ import { AiOutlineLeft } from "react-icons/ai";
 import reactIcon from "../../assets/react.svg";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/LoginContext";
+import { SongContext } from "../../Context/SongContext";
 
 const Header = () => {
   const { isLoggedIn, requestUrl } = useContext(LoginContext);
+  const { setIsSearching } = useContext(SongContext);
 
   const handleLogin = () => {
     if (!isLoggedIn) {
       location.href = requestUrl!;
     }
+  };
+
+  const handleBack = () => {
+    setIsSearching(false);
   };
 
   const handleLogout = () => {
@@ -42,7 +48,10 @@ const Header = () => {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <button className="group rounded-full bg-black/70 p-1">
+      <button
+        onClick={handleBack}
+        className="group rounded-full bg-black/70 p-1"
+      >
         <AiOutlineLeft className="text-2xl text-primaryWhite group-hover:text-white" />
       </button>
       <div className="flex items-center gap-2">

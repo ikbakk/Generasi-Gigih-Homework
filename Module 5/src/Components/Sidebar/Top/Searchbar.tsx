@@ -2,7 +2,13 @@ import { useContext } from "react";
 import { SongContext } from "../../../Context/SongContext";
 
 const Searchbar = () => {
-  const { setSearchQuery, handleSearch } = useContext(SongContext);
+  const { setSearchQuery, handleSearch, setIsSearching } =
+    useContext(SongContext);
+
+  const handleSearchSongs = () => {
+    setIsSearching(true);
+    handleSearch();
+  };
 
   const handlePropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -19,7 +25,7 @@ const Searchbar = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <button
-        onClick={handleSearch}
+        onClick={handleSearchSongs}
         className="w-full rounded-md bg-primaryWhite px-3 py-1 font-semibold text-primaryBlack duration-100 hover:bg-primaryWhite/40 hover:text-white active:scale-95"
       >
         Search

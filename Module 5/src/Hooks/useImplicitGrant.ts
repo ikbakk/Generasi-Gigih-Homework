@@ -26,7 +26,7 @@ const useImplicitGrant = (): ImplicitGrantHookResult => {
     const getRequestUrl = (clientId: string, redirectUri: string): string => {
       const state = generateRandomString(16);
       localStorage.setItem("state", state);
-      const scope = "playlist-modify-private";
+      const scope = "playlist-modify-private playlist-read-private";
       let url = "https://accounts.spotify.com/authorize";
       url += "?response_type=token";
       url += "&client_id=" + encodeURIComponent(clientId);

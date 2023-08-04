@@ -1,4 +1,4 @@
-import { Playlist } from "spotify-types";
+import { Playlist, Track } from "spotify-types";
 
 export interface ContextProviderProps {
   children: React.ReactNode;
@@ -15,10 +15,8 @@ export interface ContextValue {
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 }
 
-interface Category {
+export interface Category {
   id: string;
   name: string;
-  items: CategoryItemsType;
+  items: Playlist[];
 }
-
-export type CategoryItemsType = Playlist[] | never[];

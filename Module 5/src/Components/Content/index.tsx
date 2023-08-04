@@ -1,13 +1,12 @@
 import Categories from "./Categories";
 import Header from "./Header";
+import Songs from "./Songs";
 
-interface ContentProps {}
-
-const Content = ({}: ContentProps) => {
+const Content = () => {
   return (
-    <div className="flex h-full w-full basis-full flex-col gap-4 justify-self-start rounded-lg bg-primaryBlack p-4 md:basis-3/4">
+    <div className="flex h-full w-full basis-full flex-col gap-4 justify-self-start overflow-hidden rounded-lg bg-primaryBlack p-4 md:basis-3/4">
       <Header />
-      {/* <Categories /> */}
+      <Songs />
     </div>
   );
 };

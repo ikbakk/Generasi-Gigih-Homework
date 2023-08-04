@@ -1,24 +1,32 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { SimplifiedTrack, Recommendations } from "spotify-types";
+import { Playlist } from "spotify-types";
 
-interface HooksReturnedValue {
-  recommendedSongs: SimplifiedTrack[];
+interface EndpointResponse {
+  href: string;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
+  items: Playlist[];
 }
 
-const useFetchRecommendedSongs = (): HooksReturnedValue => {
-  const [recommendedSongs, setRecommendedSongs] = useState<SimplifiedTrack[]>(
-    [],
-  );
+interface HooksReturnedValue {
+  userPlaylists: Playlist[];
+}
+
+const useFetchUserPlaylists = (): HooksReturnedValue => {
+  const [userPlaylists, setUserPlaylists] = useState<Playlist[]>([]);
   const [isFetch, setIsFetch] = useState<boolean>(false);
   const accessToken: string | null = localStorage.getItem("access_token");
 
   useEffect(() => {
     if (isFetch) {
-      const fetchFeaturedPlaylists = async (): Promise<void> => {
+      const fetchPlaylists = async (): Promise<void> => {
         try {
-          const res = await axios.get<Recommendations>(
-            "https://api.spotify.com/v1/recommendations",
+          const res = await axios.get<EndpointResponse>(
+            "https://api.spotify.com/v1/users/iqbalfirdaus105/playlists",
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -29,7 +37,7 @@ const useFetchRecommendedSongs = (): HooksReturnedValue => {
             },
           );
 
-          setRecommendedSongs(res.data.tracks);
+          setUserPlaylists(res.data.items);
         } catch (err) {
           console.log(err);
         } finally {
@@ -37,7 +45,7 @@ const useFetchRecommendedSongs = (): HooksReturnedValue => {
         }
       };
 
-      fetchFeaturedPlaylists();
+      fetchPlaylists();
     }
   }, [isFetch]);
 
@@ -45,7 +53,7 @@ const useFetchRecommendedSongs = (): HooksReturnedValue => {
     setIsFetch(true);
   }, []);
 
-  return { recommendedSongs };
+  return { userPlaylists };
 };
 
-export default useFetchRecommendedSongs;
+export default useFetchUserPlaylists;

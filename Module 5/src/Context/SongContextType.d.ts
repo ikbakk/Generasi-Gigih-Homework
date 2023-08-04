@@ -1,4 +1,4 @@
-import { Track } from "spotify-types";
+import { SimplifiedTrack, Track } from "spotify-types";
 
 export interface ContextProviderProps {
   children: React.ReactNode;
@@ -6,10 +6,12 @@ export interface ContextProviderProps {
 
 export interface ContextValue {
   searchResult: Track[];
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: () => void;
-  selectedPlaylist: string;
-  setSelectedPlaylist: React.Dispatch<React.SetStateAction<string>>;
   shownTracks: Track[];
+  isSearching: boolean;
+  selectedPlaylist: string;
+  handleSearch: () => void;
   setShownTracks: React.Dispatch<React.SetStateAction<Track[]>>;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedPlaylist: React.Dispatch<React.SetStateAction<string>>;
+  setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
 }

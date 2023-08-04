@@ -9,7 +9,7 @@ const SongCard = ({ artist, imgUrl, name, onClick }: SongCardProps) => {
   return (
     <div
       onClick={onClick}
-      className="flex h-64 w-40 flex-col justify-between rounded-lg bg-secondaryBlack p-3 duration-300 hover:cursor-pointer hover:bg-secondaryBlack/50"
+      className="my-1 flex h-64 w-40 flex-col justify-between rounded-lg bg-secondaryBlack p-3 duration-300 hover:cursor-pointer hover:bg-secondaryBlack/50"
     >
       <div className="w-full basis-3/5 overflow-hidden rounded-lg bg-black/30">
         <img className="h-full w-full object-cover" src={imgUrl} />
