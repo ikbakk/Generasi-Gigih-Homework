@@ -1,8 +1,8 @@
 import { Track } from "spotify-types";
 import { useNavigate } from "react-router-dom";
 
-import CategoryItems from "./CategoryItems";
 import Header from "./Header";
+import SongsContainer from "../Songs/SongsContainer";
 
 interface CategoryProps {
   categoryId: string;
@@ -23,7 +23,7 @@ const Category = ({
   return (
     <div className="flex flex-col gap-4">
       <Header onClick={handleSeeMore} title={categoryTitle} />
-      <CategoryItems categoryItems={categoryItems} />
+      <SongsContainer tracks={categoryItems} />
     </div>
   );
 };

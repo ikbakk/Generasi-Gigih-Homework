@@ -1,10 +1,9 @@
-import { createContext, useEffect, useState } from "react";
-import { ContextValue, ContextProviderProps } from "./OutletContextType";
 import { Track } from "spotify-types";
-import useFetchRecommendedSongs from "../Hooks/useFetchRecommendedSongs";
-import useSearchTracks from "../Hooks/useSearchTracks";
-
-const OutletContext = createContext<ContextValue>({} as ContextValue);
+import { useEffect, useState } from "react";
+import { OutletContext } from "../../Context";
+import { ContextProviderProps } from "../../Types/ContextTypes";
+import useSearchTracks from "../../Hooks/useSearchTracks";
+import useFetchRecommendedSongs from "../../Hooks/useFetchRecommendedSongs";
 
 const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const [recommendedSongs, setRecommendedSongs] = useState<Track[]>([]);
@@ -52,4 +51,4 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   );
 };
 
-export { OutletContext, OutletContextProvider };
+export default OutletContextProvider;

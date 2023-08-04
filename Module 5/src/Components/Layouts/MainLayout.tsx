@@ -1,9 +1,12 @@
-import { SongContextProvider } from "../Context/SongContext";
-import { LoginContextProvider } from "../Context/LoginContext";
-import { OutletContextProvider } from "../Context/OutletContext";
-import Sidebar from "../Components/Sidebar";
-import MediaPlayer from "../Components/MediaPlayer";
 import { Outlet } from "react-router-dom";
+import {
+  LoginContextProvider,
+  OutletContextProvider,
+  SongContextProvider,
+} from "../ContextProviders";
+
+import Sidebar from "../Sidebar";
+import MediaPlayer from "../MediaPlayer";
 
 const MainLayout = () => {
   return (

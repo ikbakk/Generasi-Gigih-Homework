@@ -1,5 +1,5 @@
-import Header from "../Components/Content/Header";
-import Categories from "../Components/Content/Categories";
+import Header from "../Content/Header";
+import Categories from "../Content/Categories";
 
 const Home = () => {
   return (

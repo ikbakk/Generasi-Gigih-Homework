@@ -1,9 +1,9 @@
 import { Track } from "spotify-types";
 import { useContext } from "react";
-import { OutletContext } from "../Context/OutletContext";
+import { OutletContext } from "../../Context";
 
-import Header from "../Components/Content/Header";
-import Songs from "../Components/Content/Songs";
+import Header from "../Content/Header";
+import Songs from "../Content/Songs";
 
 const RecommendedSongs = () => {
   const { recommendedSongs } = useContext(OutletContext);

@@ -1,13 +1,12 @@
-import { createContext, useEffect, useState } from "react";
-import { ContextProviderProps, ContextValue } from "./LoginContextType";
-import useImplicitGrant from "../Hooks/useImplicitGrant";
-
-const LoginContext = createContext<ContextValue>({} as ContextValue);
+import { useEffect, useState } from "react";
+import { LoginContext } from "../../Context";
+import useImplicitGrant from "../../Hooks/useImplicitGrant";
+import { ContextProviderProps } from "../../Types/ContextTypes";
 
 const LoginContextProvider = ({ children }: ContextProviderProps) => {
   const localAccessToken = localStorage.getItem("access_token");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const { accessToken, requestUrl } = useImplicitGrant();
+  const { requestUrl } = useImplicitGrant();
 
   useEffect(() => {
     if (localAccessToken !== null) {
@@ -31,4 +30,4 @@ const LoginContextProvider = ({ children }: ContextProviderProps) => {
   );
 };
 
-export { LoginContext, LoginContextProvider };
+export default LoginContextProvider;

@@ -1,8 +1,9 @@
-import Header from "../Components/Content/Header";
-import Songs from "../Components/Content/Songs";
 import { useLocation } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { OutletContext } from "../Context/OutletContext";
+import { OutletContext } from "../../Context";
+
+import Header from "../Content/Header";
+import Songs from "../Content/Songs";
 
 const SearchPage = () => {
   const location = useLocation();

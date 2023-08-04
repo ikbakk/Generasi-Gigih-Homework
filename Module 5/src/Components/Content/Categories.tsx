@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Category from "./Category";
-import { OutletContext } from "../../Context/OutletContext";
+import { OutletContext } from "../../Context";
 
 const Categories = () => {
   const { categoryEntries } = useContext(OutletContext);

@@ -1,9 +1,9 @@
 import reactIcon from "../../assets/react.svg";
 import { useContext } from "react";
-import { LoginContext } from "../../Context/LoginContext";
 import { useNavigate } from "react-router-dom";
 
 import { AiOutlineLeft } from "react-icons/ai";
+import { LoginContext } from "../../Context";
 
 const Header = () => {
   const navigate = useNavigate();
