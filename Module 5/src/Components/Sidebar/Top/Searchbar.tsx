@@ -1,23 +1,16 @@
-import { useContext } from "react";
-import { SongContext } from "../../../Context/SongContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Searchbar = () => {
-  const { setSearchQuery, handleSearch, setIsSearching } =
-    useContext(SongContext);
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchSongs = () => {
-    setIsSearching(true);
-    handleSearch();
+    navigate("/search", { state: { searchQuery } });
   };
 
-  const handlePropagation = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
   return (
-    <div
-      onClick={(e) => handlePropagation(e)}
-      className="flex flex-col items-center gap-2"
-    >
+    <div className="flex flex-col items-center gap-2">
       <input
         className="w-full rounded-md bg-secondaryBlack px-3 py-1"
         type="text"
