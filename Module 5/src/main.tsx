@@ -5,8 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import MainLayout from "./Components/Layouts/MainLayout.tsx";
 import SearchPage from "./Components/Pages/Search.tsx";
-import RecommendedSongs from "./Components/Pages/RecommendedSongs.tsx";
 import Home from "./Components/Pages/Home.tsx";
+import MoreSongs from "./Components/Pages/MoreSongs.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/:playlistId",
-        element: <RecommendedSongs />,
+        element: <MoreSongs />,
       },
     ],
   },

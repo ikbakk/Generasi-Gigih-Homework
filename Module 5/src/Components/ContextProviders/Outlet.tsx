@@ -40,19 +40,23 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
     const newRecommendedSongs = slicedArray(recommendedSongs as Track[]);
     const newCategoryItems = tracks.map((tracks) => slicedArray(tracks!));
 
-    const categoryIds = ["recommended", ...ids];
-    const categoryNames = ["Recommended Songs", ...names];
-    const categoryItems = [newRecommendedSongs, ...newCategoryItems];
-    const moreCategoryItems = [recommendedSongs as Track[], ...tracks];
+    if (tracks.length > 0) {
+      const categoryIds = ["recommended", ...ids];
+      const categoryNames = ["Recommended Songs", ...names];
+      const categoryItems = [newRecommendedSongs, ...newCategoryItems];
+      const moreCategoryItems = [recommendedSongs as Track[], ...tracks];
 
-    const result = categoryIds.map((id, index) => ({
-      id,
-      name: categoryNames[index],
-      items: categoryItems[index],
-      moreItems: moreCategoryItems[index],
-    }));
+      const result = categoryIds.map((id, index) => ({
+        id,
+        name: categoryNames[index],
+        items: categoryItems[index],
+        moreItems: moreCategoryItems[index],
+      }));
 
-    return result;
+      return result;
+    }
+
+    return [];
   };
 
   useEffect(() => {

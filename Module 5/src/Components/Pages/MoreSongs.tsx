@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Header from "../Content/Header";
 import Songs from "../Content/Songs";
 
-const RecommendedSongs = () => {
+const MoreSongs = () => {
   const params = useParams();
   const { categoryEntries } = useContext(OutletContext);
   const foundCategory = categoryEntries.find(
@@ -20,4 +20,4 @@ const RecommendedSongs = () => {
   );
 };
 
-export default RecommendedSongs;
+export default MoreSongs;
