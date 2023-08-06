@@ -6,7 +6,15 @@ interface HooksReturnedValue {
   recommendedSongs: SimplifiedTrack[];
 }
 
-const useFetchRecommendedSongs = (): HooksReturnedValue => {
+interface HooksParams {
+  seed_artists?: string;
+  seed_genres?: string;
+  seed_tracks?: string;
+}
+
+const useFetchRecommendedSongs = (
+  seedValue: HooksParams,
+): HooksReturnedValue => {
   const [recommendedSongs, setRecommendedSongs] = useState<SimplifiedTrack[]>(
     [],
   );
@@ -23,9 +31,7 @@ const useFetchRecommendedSongs = (): HooksReturnedValue => {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
-              params: {
-                seed_genres: "k-pop,grunge,alt-rock",
-              },
+              params: seedValue,
             },
           );
 

@@ -10,8 +10,14 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const [searchedSongs, setSearchedSongs] = useState<Track[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const recommendedSongsSeedsValue = {
+    seed_genres: "k-pop,grunge,alt-rock",
+  };
+
   const { searchResult } = useSearchTracks(searchQuery);
-  const { recommendedSongs: songs } = useFetchRecommendedSongs();
+  const { recommendedSongs: songs } = useFetchRecommendedSongs(
+    recommendedSongsSeedsValue,
+  );
 
   const generateCategoryEntries = () => {
     const slicedArray = (array: Track[]) => array.slice(0, 7);
