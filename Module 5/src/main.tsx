@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: <SearchPage />,
       },
       {
-        path: "/recommended",
+        path: "/:playlistId",
         element: <RecommendedSongs />,
       },
     ],

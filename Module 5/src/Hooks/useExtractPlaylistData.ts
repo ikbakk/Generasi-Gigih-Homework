@@ -21,7 +21,7 @@ interface CustomPlaylistResponse extends Omit<Playlist, "tracks"> {
 const useExtractPlaylistData = (playlists: Playlist[]) => {
   const [ids, setIds] = useState<string[]>([]);
   const [names, setNames] = useState<string[]>([]);
-  const [tracks, setTracks] = useState<(Track[] | undefined)[]>([]);
+  const [tracks, setTracks] = useState<Track[][]>([]);
   const accessToken: string | null = localStorage.getItem("access_token");
 
   const getPlaylist = async (id: string) => {
@@ -38,6 +38,7 @@ const useExtractPlaylistData = (playlists: Playlist[]) => {
       return tracks;
     } catch (err) {
       console.log(err);
+      return [] as Track[];
     }
   };
 

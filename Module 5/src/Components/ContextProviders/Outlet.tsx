@@ -4,7 +4,6 @@ import { OutletContext } from "../../Context";
 import { ContextProviderProps } from "../../Types/ContextTypes";
 import useSearchTracks from "../../Hooks/useSearchTracks";
 import useFetchRecommendedSongs from "../../Hooks/useFetchRecommendedSongs";
-import useGenerateCategoryEntries from "../../Hooks/useCategoryEntries";
 import useFeaturedPlaylist from "../../Hooks/useFetchFeaturedPlaylists";
 import useExtractPlaylistData from "../../Hooks/useExtractPlaylistData";
 
@@ -44,11 +43,13 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
     const categoryIds = ["recommended", ...ids];
     const categoryNames = ["Recommended Songs", ...names];
     const categoryItems = [newRecommendedSongs, ...newCategoryItems];
+    const moreCategoryItems = [recommendedSongs as Track[], ...tracks];
 
     const result = categoryIds.map((id, index) => ({
       id,
       name: categoryNames[index],
       items: categoryItems[index],
+      moreItems: moreCategoryItems[index],
     }));
 
     return result;

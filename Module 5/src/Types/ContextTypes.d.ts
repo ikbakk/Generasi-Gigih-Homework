@@ -26,4 +26,5 @@ interface OutletCategoryEntry {
   id: string;
   name: string;
   items: Track[];
+  moreItems: Track[];
 }
