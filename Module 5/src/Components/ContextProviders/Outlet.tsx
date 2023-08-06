@@ -4,6 +4,9 @@ import { OutletContext } from "../../Context";
 import { ContextProviderProps } from "../../Types/ContextTypes";
 import useSearchTracks from "../../Hooks/useSearchTracks";
 import useFetchRecommendedSongs from "../../Hooks/useFetchRecommendedSongs";
+import useGenerateCategoryEntries from "../../Hooks/useCategoryEntries";
+import useFeaturedPlaylist from "../../Hooks/useFetchFeaturedPlaylists";
+import useExtractPlaylistData from "../../Hooks/useExtractPlaylistData";
 
 const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,6 +20,8 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const { recommendedSongs } = useFetchRecommendedSongs(
     recommendedSongsSeedsValue,
   );
+  const { featuredPlaylist } = useFeaturedPlaylist();
+  const { ids, names, tracks } = useExtractPlaylistData(featuredPlaylist);
 
   const generateCategoryEntries = () => {
     const slicedArray = (array: Track[]) => {
@@ -33,14 +38,17 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
       return array.slice(0, 2);
     };
 
-    const ids = ["recommended"];
-    const names = ["Recommended Songs"];
-    const items = [slicedArray(recommendedSongs as Track[])];
+    const newRecommendedSongs = slicedArray(recommendedSongs as Track[]);
+    const newCategoryItems = tracks.map((tracks) => slicedArray(tracks!));
 
-    const result = ids.map((id, index) => ({
+    const categoryIds = ["recommended", ...ids];
+    const categoryNames = ["Recommended Songs", ...names];
+    const categoryItems = [newRecommendedSongs, ...newCategoryItems];
+
+    const result = categoryIds.map((id, index) => ({
       id,
-      name: names[index],
-      items: items[index],
+      name: categoryNames[index],
+      items: categoryItems[index],
     }));
 
     return result;

@@ -21,6 +21,9 @@ const useFeaturedPlaylist = (): UseFeaturedPlaylistReturnValue => {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
+              params: {
+                limit: 5,
+              },
             },
           );
 
