@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Playlist } from "spotify-types";
+import { UserPlaylist } from "../Types";
 
 interface EndpointResponse {
   href: string;
@@ -9,48 +9,36 @@ interface EndpointResponse {
   offset: number;
   previous: string;
   total: number;
-  items: Playlist[];
+  items: UserPlaylist[];
 }
 
 interface HooksReturnedValue {
-  userPlaylists: Playlist[];
+  userPlaylists: UserPlaylist[];
 }
 
 const useFetchUserPlaylists = (): HooksReturnedValue => {
-  const [userPlaylists, setUserPlaylists] = useState<Playlist[]>([]);
-  const [isFetch, setIsFetch] = useState<boolean>(false);
+  const [userPlaylists, setUserPlaylists] = useState<UserPlaylist[]>([]);
   const accessToken: string | null = localStorage.getItem("access_token");
 
   useEffect(() => {
-    if (isFetch) {
-      const fetchPlaylists = async (): Promise<void> => {
-        try {
-          const res = await axios.get<EndpointResponse>(
-            "https://api.spotify.com/v1/users/iqbalfirdaus105/playlists",
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-              params: {
-                seed_genres: "k-pop,grunge,alt-rock",
-              },
+    const fetchPlaylists = async (): Promise<void> => {
+      try {
+        const res = await axios.get<EndpointResponse>(
+          "https://api.spotify.com/v1/users/iqbalfirdaus105/playlists",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
             },
-          );
+          },
+        );
 
-          setUserPlaylists(res.data.items);
-        } catch (err) {
-          console.log(err);
-        } finally {
-          setIsFetch(false);
-        }
-      };
+        setUserPlaylists(res.data.items);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-      fetchPlaylists();
-    }
-  }, [isFetch]);
-
-  useEffect(() => {
-    setIsFetch(true);
+    fetchPlaylists();
   }, []);
 
   return { userPlaylists };

@@ -2,16 +2,21 @@ interface PlaylistListItemProps {
   imgUrl: string;
   title: string;
   description: string;
+  onClick: () => void;
 }
 
 const PlaylistListItem = ({
   imgUrl,
   title,
   description,
+  onClick,
 }: PlaylistListItemProps) => {
   return (
-    <div className="group flex w-full items-center justify-between gap-2 rounded-lg p-2  duration-150 hover:cursor-pointer hover:bg-secondaryBlack ">
-      <div className="w-16 overflow-hidden rounded-md">
+    <div
+      onClick={onClick}
+      className="group flex w-full items-center justify-between gap-2 rounded-lg p-2  duration-150 hover:cursor-pointer hover:bg-secondaryBlack "
+    >
+      <div className="h-12 w-16 overflow-hidden rounded-md">
         <img className="h-full object-cover" src={imgUrl} alt="" />
       </div>
       <div className="flex w-full flex-col">

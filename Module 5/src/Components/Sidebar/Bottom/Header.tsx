@@ -1,5 +1,4 @@
 import { BsCollection, BsPlus } from "react-icons/bs";
-import ContentTab from "./Tabs";
 
 const Header = () => {
   return (
@@ -13,7 +12,6 @@ const Header = () => {
           <BsPlus className="text-2xl" />
         </button>
       </div>
-      <ContentTab />
     </div>
   );
 };

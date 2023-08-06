@@ -7,6 +7,7 @@ import MainLayout from "./Components/Layouts/MainLayout.tsx";
 import SearchPage from "./Components/Pages/Search.tsx";
 import Home from "./Components/Pages/Home.tsx";
 import MoreSongs from "./Components/Pages/MoreSongs.tsx";
+import UserPlaylistSongs from "./Components/Pages/UserPlaylistSong.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/:playlistId",
         element: <MoreSongs />,
+      },
+      {
+        path: "/user/playlist/:playlistId",
+        element: <UserPlaylistSongs />,
       },
     ],
   },
