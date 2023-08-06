@@ -6,7 +6,6 @@ import useSearchTracks from "../../Hooks/useSearchTracks";
 import useFetchRecommendedSongs from "../../Hooks/useFetchRecommendedSongs";
 
 const OutletContextProvider = ({ children }: ContextProviderProps) => {
-  const [recommendedSongs, setRecommendedSongs] = useState<Track[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -15,7 +14,7 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   };
 
   const { searchResult } = useSearchTracks(searchQuery);
-  const { recommendedSongs: songs } = useFetchRecommendedSongs(
+  const { recommendedSongs } = useFetchRecommendedSongs(
     recommendedSongsSeedsValue,
   );
 
@@ -36,7 +35,7 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
 
     const ids = ["recommended"];
     const names = ["Recommended Songs"];
-    const items = [slicedArray(recommendedSongs)];
+    const items = [slicedArray(recommendedSongs as Track[])];
 
     const result = ids.map((id, index) => ({
       id,
@@ -46,10 +45,6 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
 
     return result;
   };
-
-  useEffect(() => {
-    setRecommendedSongs(songs as Track[]);
-  }, [songs]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -66,7 +61,7 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const categoryEntries = generateCategoryEntries();
   const contextValue = {
     categoryEntries,
-    recommendedSongs,
+    recommendedSongs: recommendedSongs as Track[],
     setSearchQuery,
     searchResult,
   };

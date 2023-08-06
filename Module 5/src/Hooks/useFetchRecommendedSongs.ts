@@ -18,37 +18,27 @@ const useFetchRecommendedSongs = (
   const [recommendedSongs, setRecommendedSongs] = useState<SimplifiedTrack[]>(
     [],
   );
-  const [isFetch, setIsFetch] = useState<boolean>(false);
   const accessToken: string | null = localStorage.getItem("access_token");
 
   useEffect(() => {
-    if (isFetch) {
-      const fetchFeaturedPlaylists = async (): Promise<void> => {
-        try {
-          const res = await axios.get<Recommendations>(
-            "https://api.spotify.com/v1/recommendations",
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-              params: seedValue,
+    const fetchFeaturedPlaylists = async (): Promise<void> => {
+      try {
+        const res = await axios.get<Recommendations>(
+          "https://api.spotify.com/v1/recommendations",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
             },
-          );
+            params: seedValue,
+          },
+        );
 
-          setRecommendedSongs(res.data.tracks);
-        } catch (err) {
-          console.log(err);
-        } finally {
-          setIsFetch(false);
-        }
-      };
-
-      fetchFeaturedPlaylists();
-    }
-  }, [isFetch]);
-
-  useEffect(() => {
-    setIsFetch(true);
+        setRecommendedSongs(res.data.tracks);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchFeaturedPlaylists();
   }, []);
 
   return { recommendedSongs };
