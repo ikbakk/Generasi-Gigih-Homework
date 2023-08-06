@@ -9,6 +9,7 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const [recommendedSongs, setRecommendedSongs] = useState<Track[]>([]);
   const [searchedSongs, setSearchedSongs] = useState<Track[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const recommendedSongsSeedsValue = {
     seed_genres: "k-pop,grunge,alt-rock",
@@ -20,7 +21,19 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   );
 
   const generateCategoryEntries = () => {
-    const slicedArray = (array: Track[]) => array.slice(0, 7);
+    const slicedArray = (array: Track[]) => {
+      if (windowSize > 768 && windowSize <= 1024) {
+        return array.slice(0, 3);
+      }
+      if (windowSize > 1024 && windowSize <= 1280) {
+        return array.slice(0, 4);
+      }
+      if (windowSize > 1280) {
+        return array.slice(0, 7);
+      }
+
+      return array.slice(0, 2);
+    };
 
     const ids = ["recommended"];
     const names = ["Recommended Songs"];
@@ -42,6 +55,18 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   useEffect(() => {
     setSearchedSongs(searchResult);
   }, [searchResult]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowSize = window.innerWidth;
+      setWindowSize(windowSize);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const categoryEntries = generateCategoryEntries();
   const contextValue = {
