@@ -7,7 +7,6 @@ import useFetchRecommendedSongs from "../../Hooks/useFetchRecommendedSongs";
 
 const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const [recommendedSongs, setRecommendedSongs] = useState<Track[]>([]);
-  const [searchedSongs, setSearchedSongs] = useState<Track[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -53,10 +52,6 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   }, [songs]);
 
   useEffect(() => {
-    setSearchedSongs(searchResult);
-  }, [searchResult]);
-
-  useEffect(() => {
     const handleResize = () => {
       const windowSize = window.innerWidth;
       setWindowSize(windowSize);
@@ -72,8 +67,8 @@ const OutletContextProvider = ({ children }: ContextProviderProps) => {
   const contextValue = {
     categoryEntries,
     recommendedSongs,
-    searchedSongs,
     setSearchQuery,
+    searchResult,
   };
   return (
     <OutletContext.Provider value={contextValue}>

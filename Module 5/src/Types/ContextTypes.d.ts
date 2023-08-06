@@ -12,7 +12,7 @@ export interface LoginContextValue {
 
 export interface OutletContextValue {
   recommendedSongs: Track[];
-  searchedSongs: Track[];
+  searchResult: Track[];
   categoryEntries: OutletCategoryEntry[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
